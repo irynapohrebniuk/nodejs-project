@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+        }
+        .main-header {
+            margin: 0;
+            padding: 0;
+        }
+        .main-header__nav {
+            background-color: darkgrey;
+        }
+        .main-header__list-item {
+            display: flex;
+            align-items: center;
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        .main-header__item {
+            color: aliceblue;
+            padding: 1.5rem 3rem;
+            font-size: 1.2rem;
+            font-weight: 500;
+        }
+
+        .main-header__item a {
+            text-decoration: none;
+            color:aliceblue;
+        }
+        .main-header__item a:hover, 
+        .main-header__item a:active, 
+        .main-header__item a.active {
+            text-decoration: none;
+            color: blue;
+        }
+        
+    </style>
+    <title>Document</title>
+</head>
+<body>
+    <header class="main-header">
+        <nav class="main-header__nav">
+            <ul class="main-header__list-item">
+                <li class="main-header__item"><a class='active' href='/'>User</a></li>
+                <li class="main-header__item"><a href='/admin/add-product'>Add product</a></li>
+            </ul>
+        </nav>
+        <main>
+            <h2>My products</h2>
+            <p>The list of products ...</p>
+        </main>
+    </header>
+</body>
+</html>
