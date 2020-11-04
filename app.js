@@ -2,7 +2,7 @@ const express = require('express')
 const path = require('path')
 
 const adminData = require('./routes/admin')
-const userRoutes = require('./routes/user')
+const userRoutes = require('./routes/shop')
 
 const bodyParser = require('body-parser')
 
@@ -17,7 +17,7 @@ app.use('/admin', adminData.routes)
 app.use(userRoutes)
 
 app.use((req,res,next) => {
-    res.render('404', {pageTitle: "Page not found"})
+    res.render('404', {pageTitle: "Page Not Found"})
 })
 
 app.listen(3000)

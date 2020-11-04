@@ -1,23 +1,8 @@
-<!DOCTYPE html>
-html(lang="en")
-    head
-        meta(charset="UTF-8")
-        meta(name="viewport", content="width=device-width, initial-scale=1.0")
-        link(rel="stylesheet", href="/styles/style.css")
-        link(rel="stylesheet", href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css")
-        title #{pageTitle}
-    body
-        header.main-header
-            nav.main-header__nav
-                ul.main-header__list-item
-                    li.main-header__item
-                        a(href='/') User
-                    li.main-header__item
-                        a.active(href='/admin/add-product') Add product
-        div.container
-            main
-                form(action="/admin/add-product", method="POST")
-                    div.form-group
-                        label(for="title") Title
-                        input.form-control(name="title",type="text",id="title")
-                        button.btn.btn-primary(type="submit") Add product
+extends layouts/main-layout.pug
+
+block content
+    form(action="/admin/add-product", method="POST")
+        div.form-group
+            label(for="title") Title
+            input.form-control(name="title",type="text",id="title")
+            button.btn.btn-primary(type="submit") Add product
