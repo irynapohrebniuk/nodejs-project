@@ -1,0 +1,26 @@
+<main class="container">
+    {{#if hasProducts}}
+    {{#each prods}}
+    <div class="card mb-4 box-shadow w-60">
+        <div class="card-header">
+            <h5 class="card-title">{{this.title}}</h5>
+            <img class="card-img-top" src="https://cdn.pixabay.com/user/2019/11/12/18-53-20-554_250x250.jpg"
+                alt="Card image cap" />
+        </div>
+        <div class="card-body text-center">
+            <p class="card-text">
+                Some quick example text to build on the card title and make up the bulk of the card's content.
+            </p>
+            <h2 class="card-title pricing-card-title">
+                $19.99
+            </h2>
+            <a class="btn btn-primary" href="#">
+                Go somewhere
+            </a>
+        </div>
+    </div>
+    {{/each}}
+    {{ else}}
+    <h2>No products</h2>
+    {{/if}}
+</main>

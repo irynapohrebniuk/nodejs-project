@@ -1,12 +1,15 @@
 const express = require('express')
-// const path = require('path')
 
 const router = express.Router()
-// const bodyParser = require('body-parser')
+
 const products = []
 
 router.get('/add-product', (req, res, next) => {
-    res.render('add-product', {pageTitle: 'Add product', path: '/admin/add-product'})
+    res.render('add-product', { 
+        pageTitle: 'Add product', 
+        path: '/admin/add-product',
+        activeAddProduct: true
+    })
 })
 
 router.post('/add-product', (req, res, next) => {
