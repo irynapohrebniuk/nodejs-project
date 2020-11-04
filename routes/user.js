@@ -3,8 +3,11 @@ const path = require('path')
 
 const router = express.Router()
 
+const adminData = require('./admin')
+
 router.get('/', (req, res, next) => {
-    res.sendFile(path.join(__dirname,'..', 'views', 'user.html'))
+    const products = adminData.products
+    res.render('user', {prods: products, docTitle: 'My products'})
 })
 
 module.exports = router

@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+html(lang="en")
+    head
+        meta(charset="UTF-8")
+        meta(name="viewport", content="width=device-width, initial-scale=1.0")
+        link(rel="stylesheet", href="/styles/style.css")
+        title #{docTitle}
+    body
+        header.main-header
+            nav.main-header__nav
+                ul.main-header__list-item
+                    li.main-header__item
+                        a.active(href='/') User
+                    li.main-header__item
+                        a(href='/admin/add-product') Add product
+        main
+            if prods.length > 0
+                .grid
+                    each product in prods
+                        article.card.product-item
+                            header.card__header
+                                h2.product__title #{product.product}
+                            div.card__image
+                                img(src='https://cdn.pixabay.com/user/2019/11/12/18-53-20-554_250x250.jpg' alt='#{product.product}') 
+                            div.card__content
+                                h3.product__price $19.99
+                                p.product__description Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolores, perferendis. Natus quaerat recusandae impedit, ut voluptatibus pariatur totam libero laboriosam esse porro provident sequi dignissimos autem, quos quam explicabo sapiente.
+                            .card__actions
+                            button.btn Add to Cart
+            else
+                h2 There is no products
