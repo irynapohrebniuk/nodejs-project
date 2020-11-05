@@ -1,25 +1,27 @@
-const products = []
+const Product = require('../models/product')
 
 exports.getAddProduct = (req, res, next) => {
-    res.render('add-product', { 
-        pageTitle: 'Add product', 
+    res.render('admin/add-product', {
+        pageTitle: 'Add product',
         path: '/admin/add-product',
         activeAddProduct: true
     })
 }
 
 exports.postAddProduct = (req, res, next) => {
-    console.log(req.body.product)
-    products.push({title: req.body.title})
+    const product = new Product(req.body.title)
+    product.save()
     res.redirect('/')
 }
 
 exports.getProducts = (req, res, next) => {
-    res.render('shop', {
-        prods: products, 
-        pageTitle: 'My products', 
-        path: '/', 
-        hasProducts: products.length > 0,
-        activeShop: true
+    Product.fetchAll((products) => {
+        res.render('shop/product-list', {
+            prods: products,
+            pageTitle: 'My products',
+            path: '/',
+            hasProducts: products.length > 0,
+            activeProductList: true
+        })
     })
 }

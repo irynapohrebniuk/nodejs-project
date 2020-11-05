@@ -1,9 +1,9 @@
-<%- include('ejs-layouts/head.ejs') %>
-<%- include('ejs-layouts/header.ejs') %>
-<main class="container">
+<%- include('../includes/head.ejs') %>
+<%- include('../includes/header.ejs') %>
+<main class="container d-flex flex-wrap justify-content-center">
     <% if (prods.length > 0) { %>
     <% for (let prod of prods) { %>
-    <div class="card mb-4 box-shadow w-60">
+    <div class="card card-width mb-4 box-shadow d-inline-flex m-2">
         <div class="card-header">
             <h5 class="card-title"><%= prod.title %></h5>
             <img class="card-img-top" src="https://cdn.pixabay.com/user/2019/11/12/18-53-20-554_250x250.jpg"
@@ -26,4 +26,4 @@
     <h2>No products</h2>
     <% } %>
 </main>
-<%- include('ejs-layouts/end.ejs') %>
+<%- include('../includes/end.ejs') %>
