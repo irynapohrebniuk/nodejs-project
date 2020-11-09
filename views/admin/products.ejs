@@ -1,0 +1,36 @@
+<%- include('../includes/head.ejs') %>
+<%- include('../includes/header.ejs') %>
+<main class="container d-flex flex-wrap justify-content-center">
+    <% if (prods.length > 0) { %>
+    <% for (let prod of prods) { %>
+    <div class="card card-width mb-4 box-shadow d-inline-flex m-2">
+        <div class="card-header">
+            <h5 class="card-title"><%= prod.title %></h5>
+            <img class="card-img-top" src="<%= prod.imgUrl %>" alt="<%= prod.title %>" />
+        </div>
+        <div class="card-body text-center">
+            <p class="card-text">
+                <%= prod.description %>
+            </p>
+
+        </div>
+        <div class="card-footer text-center">
+            <h2 class="card-title pricing-card-title">
+                PLN <%= prod.price %>
+            </h2>
+            <a href="/admin/edit-product" class="btn btn-primary" href="#">
+                Edit
+            </a>
+            <form action="/admin/delete-product" method="POST" class="d-inline">
+                <button class="btn btn-primary" type="submit">
+                    Delete
+                </button>
+            </form>
+        </div>
+    </div>
+    <% } %>
+    <% } else { %>
+    <h2>No products</h2>
+    <% } %>
+</main>
+<%- include('../includes/end.ejs') %>

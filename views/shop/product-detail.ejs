@@ -1,0 +1,22 @@
+<%- include('../includes/head.ejs') %>
+<%- include('../includes/header.ejs') %>
+<main class="container d-flex flex-wrap justify-content-center">
+    <div class="card">
+        <div class="d-flex justify-content-center flex-row">
+            <div>
+                <img class="img-fluid p-2" src="<%= prod.imgUrl %>" alt="<%= prod.title %>">
+            </div>
+
+            <div class="card-body">
+                <h5 class="card-title"><%= prod.title %></h5>
+                <p class="card-text">
+                    <%= prod.description %>
+                </p>
+            </div>
+        </div>
+        <div class="card-footer">
+            <%- include('../includes/add-to-cart.ejs', {prod: prod}); %>
+        </div>
+    </div>
+</main>
+<%- include('../includes/end.ejs') %>

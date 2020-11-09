@@ -1,8 +1,8 @@
 const express = require('express')
 const path = require('path')
 
-const adminRoutes = require('./routes/root-add-product')
-const userRoutes = require('./routes/root-product-list')
+const adminRoutes = require('./routes/routes-admin')
+const userRoutes = require('./routes/routes-shop')
 const errorController = require('./controllers/error')
 
 const bodyParser = require('body-parser')

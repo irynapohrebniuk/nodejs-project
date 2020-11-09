@@ -6,19 +6,21 @@
     <div class="card card-width mb-4 box-shadow d-inline-flex m-2">
         <div class="card-header">
             <h5 class="card-title"><%= prod.title %></h5>
-            <img class="card-img-top" src="https://cdn.pixabay.com/user/2019/11/12/18-53-20-554_250x250.jpg"
-                alt="Card image cap" />
+            <img class="card-img-top" src="<%= prod.imgUrl %>" alt="Card image cap" />
         </div>
         <div class="card-body text-center">
             <p class="card-text">
-                Some quick example text to build on the card title and make up the bulk of the card's content.
+                <%= prod.description %>
             </p>
+        </div>
+        <div class="card-footer text-center">
             <h2 class="card-title pricing-card-title">
-                $19.99
+                PLN <%= prod.price %>
             </h2>
-            <a class="btn btn-primary" href="#">
-                Go somewhere
+            <a href="/products/<%= prod.id %>" class="btn btn-primary">
+                Details
             </a>
+            <%- include('../includes/add-to-cart.ejs', {prod: prod}); %>
         </div>
     </div>
     <% } %>

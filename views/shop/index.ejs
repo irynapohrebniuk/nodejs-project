@@ -1,0 +1,29 @@
+<%- include('../includes/head.ejs') %>
+<%- include('../includes/header.ejs') %>
+<main class="container d-flex flex-wrap justify-content-center">
+    <% if (prods.length > 0) { %>
+    <% for (let prod of prods) { %>
+    <div class="card card-width mb-4 box-shadow d-inline-flex m-2">
+        <div class="card-header">
+            <h5 class="card-title"><%= prod.title %></h5>
+            <img class="card-img-top" src="<%= prod.imgUrl %>" alt="<%= prod.title %>" />
+        </div>
+        <div class="card-body text-center">
+            <p class="card-text">
+                <%= prod.description %>
+            </p>
+
+        </div>
+        <div class="card-footer text-center">
+            <h2 class="card-title pricing-card-title">
+               PLN <%= prod.price %>
+            </h2>
+            <%- include('../includes/add-to-cart.ejs', {prod: prod}); %>
+        </div>
+    </div>
+    <% } %>
+    <% } else { %>
+    <h2>No products</h2>
+    <% } %>
+</main>
+<%- include('../includes/end.ejs') %>
