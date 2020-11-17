@@ -5,10 +5,10 @@
     <% for (let prod of prods) { %>
     <div class="card card-width mb-4 box-shadow d-inline-flex m-2">
         <div class="card-header">
-            <h5 class="card-title"><%= prod.title %></h5>
-            <img class="card-img-top" src="<%= prod.imgUrl %>" alt="Card image cap" />
+            <h5 class="card-title d-block" style="height: 40px;"><%= prod.title %></h5>
         </div>
         <div class="card-body text-center">
+            <img class="card-img-top" src="<%= prod.imgUrl %>" alt="Card image cap" />
             <p class="card-text">
                 <%= prod.description %>
             </p>

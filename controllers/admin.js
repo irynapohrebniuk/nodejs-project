@@ -33,7 +33,7 @@ exports.getEditProduct = (req, res, next) => {
         }
         res.render('admin/edit-product', {
             pageTitle: 'Edit product',
-            path: '/admin/edit-product/'+ prodId.toString(),
+            path: '/admin/edit-product/' + prodId.toString(),
             editing: editMode,
             product: product
         })
@@ -53,11 +53,6 @@ exports.postEditProduct = (req, res, next) => {
 
 exports.postDeleteProduct = (req, res, next) => {
     const prodId = req.body.productId
-    const deletedTitle = req.body.title
-    const deletedDescription = req.body.description
-    const deletedPrice = req.body.price
-    const deletedImgUrl = req.body.imgUrl
-    const deletedProduct = new Product(prodId, deletedTitle, deletedDescription, deletedPrice, deletedImgUrl)
     Product.deleteById(prodId)
     res.redirect('/admin/products')
 }
