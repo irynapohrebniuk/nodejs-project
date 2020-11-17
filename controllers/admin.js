@@ -42,13 +42,23 @@ exports.getEditProduct = (req, res, next) => {
 
 exports.postEditProduct = (req, res, next) => {
     const prodId = req.body.productId
-    console.log("prodId", prodId)
     const updatedTitle = req.body.title
     const updatedDescription = req.body.description
     const updatedPrice = req.body.price
     const updatedImgUrl = req.body.imgUrl
     const updatedProduct = new Product(prodId, updatedTitle, updatedDescription, updatedPrice, updatedImgUrl)
     updatedProduct.save()
+    res.redirect('/admin/products')
+}
+
+exports.postDeleteProduct = (req, res, next) => {
+    const prodId = req.body.productId
+    const deletedTitle = req.body.title
+    const deletedDescription = req.body.description
+    const deletedPrice = req.body.price
+    const deletedImgUrl = req.body.imgUrl
+    const deletedProduct = new Product(prodId, deletedTitle, deletedDescription, deletedPrice, deletedImgUrl)
+    Product.deleteById(prodId)
     res.redirect('/admin/products')
 }
 

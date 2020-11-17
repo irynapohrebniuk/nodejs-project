@@ -31,7 +31,7 @@ module.exports = class Product {
                     console.log(err)
                 })
             } else {
-                this.id = Math.random().toString()
+                this.id = (Math.floor(Math.random()*10)).toString()
                 products.push(this)
                 fs.writeFile(p, JSON.stringify(products), (err) => {
                     console.log(err)
@@ -39,6 +39,16 @@ module.exports = class Product {
             }
         })
     }
+
+    static deleteById(id) {
+        getProductsFromFile(products => {
+            const updatedProducts = products.filter(prod => prod.id !== id)
+            fs.writeFile(p, JSON.stringify(updatedProducts), (err) => {
+                console.log(err)
+            })
+        })
+    }
+
     static fetchAll(cb) {
         getProductsFromFile(cb)
     }
