@@ -4,6 +4,7 @@ const path = require('path')
 const adminRoutes = require('./routes/routes-admin')
 const userRoutes = require('./routes/routes-shop')
 const errorController = require('./controllers/error')
+const mongoConnect  = require('./util/database')
 
 const bodyParser = require('body-parser')
 
@@ -20,5 +21,9 @@ app.use(userRoutes)
 
 app.use(errorController.getError404)
 
-app.listen(3000)
 
+
+mongoConnect(client => {
+    console.log(client)
+    app.listen(3000)
+})
