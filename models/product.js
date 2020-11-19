@@ -1,3 +1,4 @@
+const mongodb = require('mongodb')
 const fs = require('fs')
 const path = require('path')
 const getDb = require('../util/database').getDb
@@ -16,50 +17,52 @@ const getProductsFromFile = (cb) => {
 }
 
 module.exports = class Product {
-    constructor(id, title, description, price, imgUrl) {
-        this.id = id
+    constructor(id, title, description, price, imgUrl, userId) {
+        this._id = id? new mongodb.ObjectID(id) : null
         this.title = title
         this.description = description
         this.price = price
         this.imgUrl = imgUrl
+        this.userId = userId
     }
 
     save() {
         const db = getDb()
-        return db.collection('products').insertOne(this)
-            .then(result => console.log("save model product:", result))
-            .catch(err => console.log(err))
-
-        // -------------------------------------- //
-
-        // getProductsFromFile(products => {
-        //     if (this.id) {
-        //         const existingProductIndex = products.findIndex(prod => prod.id === this.id)
-        //         const updatedProducts = [...products]
-        //         updatedProducts[existingProductIndex] = this
-        //         fs.writeFile(p, JSON.stringify(updatedProducts), (err) => {
-        //             console.log(err)
-        //         })
-        //     } else {
-        //         this.id = (Math.floor(Math.random() * 10)).toString()
-        //         products.push(this)
-        //         fs.writeFile(p, JSON.stringify(products), (err) => {
-        //             console.log(err)
-        //         })
-        //     }
-        // })
+        let updatedDb
+        console.log(this._id)
+        if (this._id) {
+            updatedDb = db
+                .collection('products')
+                .updateOne({ _id: this._id }, { $set: this })
+            } else {
+            updatedDb = db
+                .collection('products')
+                .insertOne(this)
+        }
+        return updatedDb
+        .then(product => console.log("the product is updated"))
+        .catch(err => console.log(err))
     }
 
     static deleteById(id) {
-        getProductsFromFile(products => {
-            const product = products.find(prod => prod.id === id)
-            const updatedProducts = products.filter(prod => prod.id !== id)
-            fs.writeFile(p, JSON.stringify(updatedProducts), (err) => {
-                if (!err) {
-                    Cart.deleteProduct(id, product.price)
-                }
-            })
-        })
+        const db = getDb()
+        let updatedDb
+        updatedDb = db
+            .collection('products')
+            .deleteOne({ _id: new mongodb.ObjectID(id) })
+        return updatedDb
+        .then(product => console.log("the product is deleted"))
+        .catch(err => console.log(err))
+
+        // getProductsFromFile(products => {
+        //     const product = products.find(prod => prod.id === id)
+        //     const updatedProducts = products.filter(prod => prod.id !== id)
+        //     fs.writeFile(p, JSON.stringify(updatedProducts), (err) => {
+        //         if (!err) {
+        //             Cart.deleteProduct(id, product.price)
+        //         }
+        //     })
+        // })
     }
 
     static fetchAll() {
@@ -68,17 +71,19 @@ module.exports = class Product {
             .find()
             .toArray()
             .then(products => {
-                console.log("products from db: ", products)
                 return products
             })
             .catch(error => console.log(error))
     }
 
-    static findProductById(id, cb) {
-        getProductsFromFile(products => {
-            const product = products.find(prod => prod.id === id)
-            cb(product)
-        })
+    static findProductById(id) {
+        const db = getDb()
+        return db
+            .collection('products')
+            .find({ _id: new mongodb.ObjectID(id) })
+            .next()
+            .then(product => product)
+            .catch(error => console.log(error))
     }
 }
 

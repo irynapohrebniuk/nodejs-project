@@ -17,7 +17,7 @@
             <h2 class="card-title pricing-card-title">
                 PLN <%= prod.price %>
             </h2>
-            <a href="/products/<%= prod.id %>" class="btn btn-primary">
+            <a href="/products/<%= prod._id %>" class="btn btn-primary">
                 Details
             </a>
             <%- include('../includes/add-to-cart.ejs', {prod: prod}); %>

@@ -15,4 +15,10 @@ router.post('/edit-product', adminController.postEditProduct)
 
 router.post('/delete-product', adminController.postDeleteProduct)
 
+// router.get('/add-user', adminController.getAddUser)
+
+// router.post('/add-user', adminController.postAddUser)
+
+// router.get('/users', adminController.getUsers)
+
 module.exports = router

@@ -24,7 +24,7 @@
                     value="<% if (editing) { %> <%= product.imgUrl %><% } %>" />
             </div>
             <% if (editing) { %>
-                <input type="hidden" value="<%= product.id %>" name="productId" />
+                <input type="hidden" value="<%= product._id %>" name="productId" />
             <% } %>
             <button class="btn btn-primary" type="submit">
                 <% if (editing) { %> Update Product <% } else { %> Add Product <% } %>

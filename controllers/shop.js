@@ -17,23 +17,27 @@ exports.getProducts = (req, res, next) => {
 
 exports.getProduct = (req, res, next) => {
     const prodId = req.params.productId
-    Product.findProductById(prodId, prod => {
-        res.render('shop/product-detail', {
-            prod: prod,
-            pageTitle: prod.title,
-            path: '/products/' + prodId.toString()
+    Product.findProductById(prodId)
+        .then(prod => {
+            res.render('shop/product-detail', {
+                prod: prod,
+                pageTitle: prod.title,
+                path: '/products/' + prodId.toString()
+            })
         })
-    })
+        .catch(error => console.log(error))
 }
 
 exports.getIndex = (req, res, next) => {
-    Product.fetchAll((products) => {
-        res.render('shop/index', {
-            prods: products,
-            pageTitle: 'Shop',
-            path: '/'
+    Product.fetchAll()
+        .then(products => {
+            res.render('shop/index', {
+                prods: products,
+                pageTitle: 'Shop',
+                path: '/'
+            })
         })
-    })
+        .catch(error => console.log(error))
 }
 
 exports.getCart = (req, res, next) => {
@@ -55,13 +59,19 @@ exports.getCart = (req, res, next) => {
                 totalPrice: cart.totalPrice
             })
         })
-
     })
-
 }
 
 exports.postCart = (req, res, next) => {
     const productId = req.body.productId
+    Product
+        .findProductById(productId)
+        .then(product => {
+            console.log("postCart req: ", req.user)
+            return req.user.addToCart(product)
+        })
+        .then(result => console.log(result))
+
     Product.findProductById(productId, product => {
         Cart.addProduct(productId, product.price)
     })
