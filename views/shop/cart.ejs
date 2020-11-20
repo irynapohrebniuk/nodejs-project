@@ -6,22 +6,19 @@
         <% products.forEach(prod => { %>
         <li class="list-group-item d-flex justify-content-around align-items-center">
             <span class="m-2"><img class="rounded img-fluid img-thumbnail" style="width: 70px; height: 70px;"
-                    src="<%=prod.productData.imgUrl %>" alt="<%=prod.productData.title %>"></span>
-            <%=prod.productData.title %>
+                    src="<%=prod.imgUrl %>" alt="<%=prod.title %>"></span>
+            <%=prod.title %>
             <span class="badge badge-primary badge-pill ml-4 p-2 pl-4 pr-4"><%=prod.quantity %></span>
-            <span class="ml-4 p-2 pl-4 pr-4"><%= prod.productData.price %></span>
+            <span class="ml-4 p-2 pl-4 pr-4"><%= prod.price %></span>
             <span>
                 <form action="/cart-delete-item" method="POST">
-                    <input type="hidden" name="prodId" value="<%= prod.productData.id %>" />
-                    <input type="hidden" name="prodPrice" value="<%= prod.productData.price %>" />
+                    <input type="hidden" name="prodId" value="<%= prod._id %>" />
+                    <input type="hidden" name="prodPrice" value="<%= prod.price %>" />
                     <input type="submit" class="btn" value="&times;">
                 </form>
             </span>
         </li>
         <% }) %>
-        <li class="list-group-item">
-            <h3>Total price: <%= totalPrice %></h3>
-        </li>
     </ul>
     <% } else { %>
     <h1>No Products in Cart</h1>

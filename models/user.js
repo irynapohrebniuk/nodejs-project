@@ -28,19 +28,40 @@ class User {
             updatedCartItems[cartProductIndex].quantity = newQuantity
         } else {
             updatedCartItems.push({
-                productId: new ObjectId(product._id), 
+                productId: new ObjectId(product._id),
                 quantity: newQuantity
             })
         }
 
-        const updatedCart = {items: updatedCartItems }
+        const updatedCart = { items: updatedCartItems }
         const db = getDb()
         return db
             .collection('users')
             .updateOne(
-                {_id: new ObjectId(this._id)}, 
-                {$set: {cart: updatedCart}}
-                )
+                { _id: new ObjectId(this._id) },
+                { $set: { cart: updatedCart } }
+            )
+    }
+
+    getCart() {
+        const db = getDb()
+        const productIds = this.cart.items.map(item => {
+            return item.productId
+        })
+        return db
+            .collection('products')
+            .find({ _id: { $in: productIds } })
+            .toArray()
+            .then(products => {
+                return products.map(product => {
+                    return {
+                        ...product, 
+                        quantity: this.cart.items.find(
+                            i => i.productId.toString() === product._id.toString()
+                            ).quantity
+                    }
+                })
+            })
     }
 
     static findUserById(id) {
