@@ -23,5 +23,12 @@
     <% } else { %>
     <h1>No Products in Cart</h1>
     <% } %>
+    <div class="w-100 text-center">
+        <form action="/create-order" method="POST">
+            <button class="btn btn-primary">Create order</a>
+        </form>
+    </div>
+    
 </main>
+
 <%- include('../includes/end.ejs') %>

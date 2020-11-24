@@ -5,7 +5,7 @@ const ObjectId = mongodb.ObjectId
 
 class User {
     constructor(id, name, email, cart) {
-        this._id = id
+        this._id = new ObjectId(id)
         this.name = name
         this.email = email
         this.cart = cart
@@ -38,7 +38,7 @@ class User {
         return db
             .collection('users')
             .updateOne(
-                { _id: new ObjectId(this._id) },
+                { _id: this._id },
                 { $set: { cart: updatedCart } }
             )
     }
@@ -55,13 +55,45 @@ class User {
             .then(products => {
                 return products.map(product => {
                     return {
-                        ...product, 
+                        ...product,
                         quantity: this.cart.items.find(
                             i => i.productId.toString() === product._id.toString()
-                            ).quantity
+                        ).quantity
                     }
                 })
             })
+    }
+
+    addOrder() {
+        const db = getDb()
+        return this.getCart().then(products => {
+            const order = {
+            items: products,
+            user: {
+                _id: this._id,
+                name: this.name
+            }
+        }
+        return db.collection('orders').insertOne(order)
+            .then(result => {
+                this.cart = {item: []}
+                return db
+                    .collection("users")
+                    .updateOne(
+                        { _id: this._id},
+                        { $set: { cart: { items: [] }}}
+                    )
+            })
+        })
+    }
+
+    getOrders() {
+        const db = getDb()
+        console.log("id: ", this._id)
+        return db
+            .collection('orders')
+            .find({'user._id': this._id})
+            .toArray()
     }
 
     static findUserById(id) {
@@ -76,16 +108,16 @@ class User {
             .catch(error => console.log(error))
     }
 
-    // static fetchAll() {
-    //     const db = getDb()
-    //     return db.collection('users')
-    //         .find()
-    //         .toArray()
-    //         .then(users => {
-    //             return users
-    //         })
-    //         .catch(error => console.log(error))
-    // }
+    deleteProductFromCart(productId) {
+        const updatedCartItems = this.cart.items.filter(item => item.productId.toString() !== productId.toString())
+        const db = getDb()
+        return db
+            .collection('users')
+            .updateOne(
+                { _id: new ObjectId(this._id) },
+                { $set: { cart: { items: updatedCartItems } } }
+            )
+    }
 }
 
 module.exports = User

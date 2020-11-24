@@ -44,7 +44,6 @@ exports.getCart = (req, res, next) => {
     req.user
         .getCart()
         .then(products => {
-            console.log("getCart", products)
             res.render('shop/cart', {
                 pageTitle: 'Your Cart',
                 path: 'shop/cart',
@@ -59,32 +58,36 @@ exports.postCart = (req, res, next) => {
     Product
         .findProductById(productId)
         .then(product => {
-            console.log("postCart req: ", req.user)
             return req.user.addToCart(product)
         })
-        .then(result => console.log(result))
-
-    Product.findProductById(productId, product => {
-        Cart.addProduct(productId, product.price)
-    })
-    res.redirect('/cart')
+        .then(result => res.redirect('/products'))
 }
 
 exports.postCartDeleteProduct = (req, res, next) => {
     const productId = req.body.prodId
-    Product.findProductById(productId, product => {
-        Cart.deleteProduct(productId, product.price)
-    })
-    res.redirect('/cart')
+    req.user
+        .deleteProductFromCart(productId)
+        .then(result => res.redirect('/cart'))
+        .catch(err => console.log(err))
+}
+
+exports.postOrder = (req, res, next) => {
+    req.user
+        .addOrder()
+        .then(result => res.redirect('/orders'))
+        .catch(err => console.log(err))
 }
 
 exports.getOrders = (req, res, next) => {
-    Product.fetchAll((products) => {
-        res.render('shop/orders', {
-            prods: products,
-            pageTitle: 'Orders',
-            path: '/orders'
-        })
+    req.user
+        .getOrders()
+        .then((orders) => {
+            console.log("orders: ", orders)
+            res.render('shop/orders', {
+                orders: orders,
+                pageTitle: 'Orders',
+                path: '/orders'
+            })
     })
 }
 
