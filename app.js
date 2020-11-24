@@ -1,15 +1,18 @@
 const express = require('express')
+const mongoose = require('mongoose'
+)
 const path = require('path')
 
 const adminRoutes = require('./routes/routes-admin')
 const shopRoutes = require('./routes/routes-shop')
 const errorController = require('./controllers/error')
-const mongoConnect = require('./util/database').mongoConnect
+
 const User = require('./models/user')
 
 
 const bodyParser = require('body-parser')
 const { nextTick } = require('process')
+const { Mongoose } = require('mongoose')
 
 const app = express()
 
@@ -36,7 +39,11 @@ app.use(errorController.getError404)
 
 
 
-mongoConnect(client => {
+mongoose
+    .connect('mongodb+srv://user:usershop@cluster0.itwlf.mongodb.net/shop?retryWrites=true&w=majority')
+    .then(result => {
+        app.listen(3000)
+    })
+    .catch(err => console.log(err))
 
-    app.listen(3000)
-})
+    
