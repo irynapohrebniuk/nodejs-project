@@ -1,8 +1,0 @@
-extends layouts/main-layout.pug
-
-block content
-    form(action="/admin/add-product", method="POST")
-        div.form-group
-            label(for="title") Title
-            input.form-control(name="title",type="text",id="title")
-            button.btn.btn-primary(type="submit") Add product
